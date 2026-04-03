@@ -1,9 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { streamChat, type ChatMessage } from "../api/foundryClient";
 
-const API_URL = import.meta.env.VITE_API_URL ?? "";
-const PROJECT_ID = import.meta.env.VITE_PROJECT_ID ?? "";
-
 interface UseChatResult {
   messages: ChatMessage[];
   isStreaming: boolean;
@@ -21,13 +18,6 @@ export const useChat = (): UseChatResult => {
   const sendMessage = useCallback(async (content: string) => {
     const trimmed = content.trim();
     if (!trimmed) return;
-
-    if (!API_URL || !PROJECT_ID) {
-      setError(
-        "Missing configuration. Set VITE_API_URL and VITE_PROJECT_ID in your .env file."
-      );
-      return;
-    }
 
     setError(null);
     abortRef.current = false;
@@ -49,7 +39,8 @@ export const useChat = (): UseChatResult => {
       setIsStreaming(true);
 
       try {
-        const stream = streamChat(API_URL, PROJECT_ID, conversationHistory);
+        // Server now handles the Azure API key injection
+        const stream = streamChat(conversationHistory);
 
         for await (const token of stream) {
           if (abortRef.current) break;

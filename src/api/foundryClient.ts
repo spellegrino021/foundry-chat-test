@@ -4,17 +4,16 @@ export interface ChatMessage {
 }
 
 /**
- * Streams chat completions from the Foundry chat proxy via SSE.
+ * Streams chat completions from the local Express server via SSE.
  *
  * Yields individual content tokens as they arrive. The caller is responsible
  * for accumulating them into a full assistant message.
  */
 export async function* streamChat(
-  apiUrl: string,
-  projectId: string,
   messages: ChatMessage[]
 ): AsyncGenerator<string, void, unknown> {
-  const url = `${apiUrl}/projects/${projectId}/foundry/chat`;
+  // Call our own Express server, which injects the API key server-side
+  const url = "/api/chat";
 
   const response = await fetch(url, {
     method: "POST",

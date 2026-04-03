@@ -1,6 +1,14 @@
 # Foundry Chat Test
 
-A standalone Vite + React + TypeScript app for testing Foundry agent integration via the Embr chat proxy.
+A standalone Vite + React + TypeScript app for testing Azure AI Foundry chat integration.
+
+## Architecture
+
+This is a **hybrid app** with:
+- **Frontend**: Vite + React SPA
+- **Backend**: Express server that securely proxies to Azure AI
+
+The server injects your API key server-side, so secrets never reach the browser.
 
 ## Setup
 
@@ -13,45 +21,49 @@ A standalone Vite + React + TypeScript app for testing Foundry agent integration
    ```bash
    cp .env.example .env
    ```
-   Edit `.env` with your actual values:
-   - `VITE_API_URL` — Base URL for the Embr API (e.g. `https://your-embr-instance.com/api`)
-   - `VITE_PROJECT_ID` — The project ID to use for Foundry chat
+   Edit `.env` with your Azure AI Foundry values:
+   - `FOUNDRY_ENDPOINT` — Full Azure OpenAI endpoint with deployment name  
+     Example: `https://my-resource.openai.azure.com/openai/deployments/gpt-4o`
+   - `FOUNDRY_API_KEY` — Your Azure AI API key
 
-3. **Start the dev server:**
+3. **Build the frontend:**
    ```bash
-   npm run dev
+   npm run build
    ```
-   The app runs at [http://localhost:5174](http://localhost:5174).
 
-## API Integration
+4. **Start the server:**
+   ```bash
+   npm start
+   ```
+   The app runs at [http://localhost:8080](http://localhost:8080).
 
-The app connects to the Embr Foundry chat proxy:
+## Development
 
-- **Endpoint:** `POST {VITE_API_URL}/projects/{VITE_PROJECT_ID}/foundry/chat`
-- **Request body:**
-  ```json
-  {
-    "messages": [
-      { "role": "user", "content": "Hello!" }
-    ]
-  }
-  ```
-- **Response:** SSE stream with events:
-  - `event: token` / `data: {"content": "..."}` — individual tokens
-  - `event: done` — stream complete
-  - `event: error` — error occurred
-
-## Build
+For local development with hot reload:
 
 ```bash
-npm run build
+# Terminal 1: Vite dev server (frontend)
+npm run dev
+
+# Terminal 2: Express server (backend)
+npm run dev:server
 ```
 
-Output is written to `dist/`.
+> **Note:** In dev mode, you'll need to configure Vite to proxy `/api` requests to the Express server.
+
+## Deploying to Embr
+
+1. Push your code to GitHub
+2. Create a project in Embr Portal
+3. Go to **Variables** tab and add:
+   - `FOUNDRY_ENDPOINT` (Secret, Runtime)
+   - `FOUNDRY_API_KEY` (Secret, Runtime)
+4. Deploy — Embr injects the env vars at container startup
 
 ## Tech Stack
 
 - [Vite](https://vitejs.dev/) 6
 - [React](https://react.dev/) 19
+- [Express](https://expressjs.com/) 5
 - TypeScript 5.8
 - Custom CSS (Copilot-like dark theme)
