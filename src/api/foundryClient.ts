@@ -4,18 +4,14 @@ export interface ChatMessage {
 }
 
 /**
- * Streams chat completions from the local Express server via SSE.
- *
- * Yields individual content tokens as they arrive. The caller is responsible
- * for accumulating them into a full assistant message.
+ * Streams chat tokens from the Express server, which proxies the full
+ * conversation history to the published Azure AI Foundry agent via the
+ * Responses API. Yields individual content tokens as they arrive.
  */
 export async function* streamChat(
   messages: ChatMessage[]
 ): AsyncGenerator<string, void, unknown> {
-  // Call our own Express server, which injects the API key server-side
-  const url = "/api/chat";
-
-  const response = await fetch(url, {
+  const response = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ messages }),
@@ -23,9 +19,7 @@ export async function* streamChat(
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => "Unknown error");
-    throw new Error(
-      `Chat request failed (${response.status}): ${errorText}`
-    );
+    throw new Error(`Chat request failed (${response.status}): ${errorText}`);
   }
 
   if (!response.body) {
@@ -43,42 +37,23 @@ export async function* streamChat(
 
       buffer += decoder.decode(value, { stream: true });
       const lines = buffer.split("\n");
-      // Keep the last (potentially incomplete) line in the buffer
       buffer = lines.pop() || "";
 
-      let currentEvent = "";
-
       for (const line of lines) {
-        if (line.startsWith("event: ")) {
-          currentEvent = line.slice(7).trim();
-          continue;
-        }
+        if (!line.startsWith("data: ")) continue;
 
-        if (line.startsWith("data: ")) {
-          const raw = line.slice(6);
+        const raw = line.slice(6).trim();
+        if (raw === "[DONE]") return;
 
-          // Handle terminal events
-          if (currentEvent === "done" || raw === "[DONE]") {
-            return;
+        try {
+          const data = JSON.parse(raw) as { content?: string; error?: string };
+          if (data.error) throw new Error(`Stream error: ${data.error}`);
+          if (data.content) yield data.content;
+        } catch (err) {
+          // Rethrow application-level errors; skip unparseable lines
+          if (err instanceof Error && err.message.startsWith("Stream error:")) {
+            throw err;
           }
-
-          if (currentEvent === "error") {
-            throw new Error(`Stream error: ${raw}`);
-          }
-
-          try {
-            const data = JSON.parse(raw) as { content?: string };
-            if (data.content) {
-              yield data.content;
-            }
-          } catch {
-            // Non-JSON data line — could be a plain-text token
-            if (raw.trim()) {
-              yield raw;
-            }
-          }
-
-          currentEvent = "";
         }
       }
     }

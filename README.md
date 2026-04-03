@@ -1,6 +1,6 @@
 # Foundry Chat Test
 
-A standalone Vite + React + TypeScript app for testing Azure AI Foundry chat integration.
+A standalone Vite + React + TypeScript app for testing Azure AI Foundry agent chat integration.
 
 ## Architecture
 
@@ -8,7 +8,7 @@ This is a **hybrid app** with:
 - **Frontend**: Vite + React SPA
 - **Backend**: Express server that securely proxies to Azure AI
 
-The server injects your API key server-side, so secrets never reach the browser.
+The server injects your API key server-side, so secrets never reach the browser. Conversation history is maintained in an Azure AI Foundry thread — the agent remembers previous messages automatically.
 
 ## Setup
 
@@ -22,8 +22,10 @@ The server injects your API key server-side, so secrets never reach the browser.
    cp .env.example .env
    ```
    Edit `.env` with your Azure AI Foundry values:
-   - `FOUNDRY_ENDPOINT` — Full Azure OpenAI endpoint with deployment name  
-     Example: `https://my-resource.openai.azure.com/openai/deployments/gpt-4o`
+   - `FOUNDRY_PROJECT_ENDPOINT` — Your project endpoint  
+     Example: `https://my-resource.services.ai.azure.com/api/projects/my-project`
+   - `FOUNDRY_AGENT_ID` — Your agent ID from Foundry Portal → Agents  
+     Example: `asst_xxxxxxxxxxxxxxxxxxxx`
    - `FOUNDRY_API_KEY` — Your Azure AI API key
 
 3. **Build the frontend:**
@@ -56,7 +58,8 @@ npm run dev:server
 1. Push your code to GitHub
 2. Create a project in Embr Portal
 3. Go to **Variables** tab and add:
-   - `FOUNDRY_ENDPOINT` (Secret, Runtime)
+   - `FOUNDRY_PROJECT_ENDPOINT` (Secret, Runtime)
+   - `FOUNDRY_AGENT_ID` (Secret, Runtime)
    - `FOUNDRY_API_KEY` (Secret, Runtime)
 4. Deploy — Embr injects the env vars at container startup
 

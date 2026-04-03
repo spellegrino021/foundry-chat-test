@@ -24,30 +24,31 @@ export const useChat = (): UseChatResult => {
 
     const userMessage: ChatMessage = { role: "user", content: trimmed };
 
-    // Capture current messages + user message for the API call
+    // Capture full conversation history including the new user message,
+    // then kick off streaming. The Responses API requires the full history
+    // on every call since the published agent endpoint doesn't store state.
     setMessages((prev) => {
-      const updated = [...prev, userMessage];
-      // Kick off streaming with the full conversation history
-      void doStream(updated);
-      return updated;
+      const history = [...prev, userMessage];
+      void doStream(history);
+      return history;
     });
 
     async function doStream(conversationHistory: ChatMessage[]) {
-      // Add an empty assistant placeholder
-      const assistantMessage: ChatMessage = { role: "assistant", content: "" };
-      setMessages([...conversationHistory, assistantMessage]);
+      setMessages([...conversationHistory, { role: "assistant", content: "" }]);
       setIsStreaming(true);
 
       try {
-        // Server now handles the Azure API key injection
         const stream = streamChat(conversationHistory);
+        let accumulated = "";
 
         for await (const token of stream) {
           if (abortRef.current) break;
-
-          assistantMessage.content += token;
-          // Update with the accumulated content
-          setMessages([...conversationHistory, { ...assistantMessage }]);
+          accumulated += token;
+          const snapshot = accumulated;
+          setMessages([
+            ...conversationHistory,
+            { role: "assistant", content: snapshot },
+          ]);
         }
       } catch (err) {
         const message =
