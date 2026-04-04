@@ -135,8 +135,8 @@ app.post("/api/chat", async (req, res) => {
 const distPath = join(__dirname, "..", "dist");
 app.use(express.static(distPath));
 
-// SPA fallback
-app.get("*", (_req, res) => {
+// SPA fallback — Express 5 requires a named wildcard or regex (bare * no longer supported)
+app.get(/.*/, (_req, res) => {
   res.sendFile(join(distPath, "index.html"));
 });
 
