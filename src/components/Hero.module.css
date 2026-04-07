@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   min-height: 100vh;
-  background: #FAFAF7;
+  background: #FFFFFF;
   padding: 0;
 }
 
@@ -70,19 +70,19 @@
 }
 
 .bag {
-  top: 15%;
-  left: 30%;
+  top: 20%;
+  left: 15%;
   width: 180px;
 }
 
 .cup {
   bottom: 25%;
-  left: 10%;
+  left: 5%;
   width: 200px;
 }
 
 .bowl {
-  bottom: 30%;
+  top: 25%;
   right: 5%;
   width: 170px;
 }
