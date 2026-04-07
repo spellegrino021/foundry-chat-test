@@ -18,11 +18,10 @@
 }
 
 .logo {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 18px;
-  font-weight: 900;
-  font-style: italic;
-  color: #D4C84A;
+  font-family: 'Schoolbell', cursive;
+  font-size: 22px;
+  font-weight: 400;
+  color: #6F4E37;
   letter-spacing: -0.5px;
   margin-bottom: 80px;
 }
