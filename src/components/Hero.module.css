@@ -4,11 +4,13 @@
   min-height: 100vh;
   background: #FAFAF7;
   padding: 0;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .left {
   flex: 0 0 58%;
-  padding: 80px 60px;
+  padding: 80px 60px 80px 80px;
 }
 
 .right {
