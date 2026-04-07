@@ -19,7 +19,8 @@
 }
 
 .sectionSubtitle {
-  font-size: 16px;
+  font-size: 20px;
+  font-family: 'Schoolbell', cursive;
   color: var(--color-text-muted);
 }
 
@@ -62,8 +63,8 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
-  background: #3B1A08;
-  color: #FAFAF7;
+  background: #7a2c1d;
+  color: #fff7ae;
   padding: 4px 12px;
   border-radius: 20px;
 }

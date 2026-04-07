@@ -45,7 +45,6 @@ export function ChatWidget() {
           onClick={() => setIsOpen(true)}
           aria-label="Chat with our agent"
         >
-          <span className={styles.fabIcon}>💬</span>
           <span className={styles.fabLabel}>Chat with an agent</span>
         </button>
       )}
@@ -81,7 +80,11 @@ export function ChatWidget() {
           <div className={styles.messageArea}>
             {messages.length === 0 && (
               <div className={styles.emptyState}>
-                <span className={styles.emptyIcon}>☕</span>
+                <img
+                  src="/src/components/illustrations/coffeewithoutbg.png"
+                  alt="Coffee"
+                  className={styles.emptyIcon}
+                />
                 <p>Hi! Ask me about our coffee, brewing tips, or your order.</p>
               </div>
             )}

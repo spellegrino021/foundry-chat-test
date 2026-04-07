@@ -1,37 +1,63 @@
 .hero {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   min-height: 100vh;
   background: #FFFFFF;
   padding: 0;
 }
 
+.logoWrap {
+  display: grid;
+  justify-content: center;
+  padding: 32px 24px 0;
+  font-family: 'Schoolbell', cursive;
+  font-size: clamp(48px, 5vw, 80px);
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.logoWrap > * {
+  grid-area: 1 / 1;
+}
+
+.logoOutline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #7a2c1d;
+  transform: translate(2px, 3px);
+  z-index: 0;
+}
+
+.logo {
+  color: #7a2c1d;
+  z-index: 1;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+}
+
 .left {
   flex: 0 0 58%;
-  padding: 80px 60px;
+  padding: 20px 60px 40px;
 }
 
 .right {
   flex: 1;
-  position: relative;
-  height: 100vh;
-}
-
-.logo {
-  font-family: 'Schoolbell', cursive;
-  font-size: 22px;
-  font-weight: 400;
-  color: #6F4E37;
-  letter-spacing: -0.5px;
-  margin-bottom: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
 .headline {
-  font-family: 'Fraunces', serif;
+  font-family: 'Arvo', serif;
   font-size: clamp(52px, 5.5vw, 86px);
   font-weight: 700;
   font-style: italic;
-  color: #3B1A08;
+  color: #623412;
   line-height: 1.05;
 }
 
@@ -46,8 +72,8 @@
   background: transparent;
   color: #4A4A1A;
   padding: 12px 32px;
-  font-size: 15px;
-  font-family: inherit;
+  font-size: 18px;
+  font-family: 'Schoolbell', cursive;
   letter-spacing: 0.02em;
   cursor: pointer;
   transition: background 0.2s;
@@ -58,55 +84,30 @@
   background: rgba(107, 107, 42, 0.08);
 }
 
-.illustration {
-  position: absolute;
-}
-
 .img {
-  width: 100%;
-  height: 100%;
+  max-width: 80vw;
+  max-height: 80vh;
   object-fit: contain;
 }
 
-.bag {
-  top: 20%;
-  left: 15%;
-  width: 180px;
-}
-
-.cup {
-  bottom: 25%;
-  left: 5%;
-  width: 200px;
-}
-
-.bowl {
-  top: 25%;
-  right: 5%;
-  width: 170px;
-}
-
 @media (max-width: 768px) {
-  .hero {
+  .logoWrap {
+    padding: 32px 16px 16px;
+  }
+
+  .content {
     flex-direction: column;
   }
 
   .left {
     flex: none;
-    padding: 48px 24px;
+    padding: 24px 24px;
     text-align: center;
   }
 
-  .logo {
-    margin-bottom: 40px;
-  }
-
   .right {
-    height: 50vh;
+    height: auto;
     width: 100%;
-  }
-
-  .illustration {
-    transform: scale(0.6);
+    padding: 24px;
   }
 }

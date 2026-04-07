@@ -91,7 +91,7 @@ export function ProductGrid() {
   return (
     <section id="menu" className={styles.section}>
       <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Our Beans</h2>
+        <h2 className={styles.sectionTitle}>Our Bestselling Beans</h2>
         <p className={styles.sectionSubtitle}>
           Each bag is roasted within 48 hours of your order. 12 oz bags, whole bean.
         </p>

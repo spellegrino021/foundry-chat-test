@@ -27,14 +27,15 @@
   --color-border: rgba(107,107,42,0.15);
 
   /* Chat widget */
-  --chat-bg: #1e1e2e;
-  --chat-surface: #2a2a3c;
-  --chat-input: #33334a;
-  --chat-text: #e0e0f0;
-  --chat-text-muted: #8888aa;
+  --chat-bg: #FFFFFF;
+  --chat-surface: #FAFAF7;
+  --chat-input: #FFFFFF;
+  --chat-text: #3B1A08;
+  --chat-text-muted: #6b5b50;
   --chat-accent: #6B6B2A;
-  --chat-user-bg: #3a3a5c;
-  --chat-assistant-bg: #2a2a3c;
+  --chat-user-bg: #3B1A08;
+  --chat-assistant-bg: #F5F0E8;
+  --chat-border: rgba(107,107,42,0.15);
 }
 
 * {
