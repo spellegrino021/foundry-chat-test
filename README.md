@@ -1,14 +1,18 @@
 # Foundry Chat Test
 
-A standalone Vite + React + TypeScript app for testing Azure AI Foundry agent chat integration.
+A demo coffee-shop storefront ("Embr Roasting Co.") with an embedded AI chat widget powered by an [Azure AI Foundry](https://ai.azure.com/) published agent.
 
 ## Architecture
 
-This is a **hybrid app** with:
-- **Frontend**: Vite + React SPA
-- **Backend**: Express server that securely proxies to Azure AI
+```
+Browser (React SPA)
+  └─ ChatWidget  ──POST /api/chat──▶  Express server  ──Responses API──▶  Azure AI Foundry Agent
+```
 
-The server injects your API key server-side, so secrets never reach the browser. Conversation history is maintained in an Azure AI Foundry thread — the agent remembers previous messages automatically.
+- **Frontend** — Vite + React SPA with a hero section, product grid, and a floating chat widget.
+- **Backend** — Express server that proxies chat requests to the published Foundry agent via the OpenAI-compatible [Responses API](https://learn.microsoft.com/azure/ai-services/agents/). The API key stays server-side and never reaches the browser.
+- **Streaming** — Responses are streamed back as Server-Sent Events (SSE), so tokens appear in real time.
+- **Conversation history** — Maintained in the browser (`useChat` hook) and sent with every request. The published agent endpoint is stateless.
 
 ## Setup
 
@@ -21,52 +25,60 @@ The server injects your API key server-side, so secrets never reach the browser.
    ```bash
    cp .env.example .env
    ```
-   Edit `.env` with your Azure AI Foundry values:
-   - `FOUNDRY_PROJECT_ENDPOINT` — Your project endpoint  
-     Example: `https://my-resource.services.ai.azure.com/api/projects/my-project`
-   - `FOUNDRY_AGENT_ID` — Your agent ID from Foundry Portal → Agents  
-     Example: `asst_xxxxxxxxxxxxxxxxxxxx`
-   - `FOUNDRY_API_KEY` — Your Azure AI API key
+   Edit `.env`:
+   | Variable | Description |
+   |---|---|
+   | `FOUNDRY_AGENT_ENDPOINT` | Base OpenAI-protocol URL for your published agent. Format: `https://{resource}.services.ai.azure.com/api/projects/{project}/applications/{agent}/protocols/openai` |
+   | `FOUNDRY_API_KEY` | API key for your Azure AI Foundry resource |
+   | `PORT` | *(optional)* Server port, defaults to `8080` |
 
-3. **Build the frontend:**
+3. **Build & run:**
    ```bash
-   npm run build
+   npm run build   # TypeScript check + Vite production build
+   npm start        # Start Express on http://localhost:8080
    ```
-
-4. **Start the server:**
-   ```bash
-   npm start
-   ```
-   The app runs at [http://localhost:8080](http://localhost:8080).
 
 ## Development
 
-For local development with hot reload:
+Run the frontend and backend in parallel with hot reload:
 
 ```bash
-# Terminal 1: Vite dev server (frontend)
+# Terminal 1 — Vite dev server (port 5174)
 npm run dev
 
-# Terminal 2: Express server (backend)
+# Terminal 2 — Express server (watches for changes)
 npm run dev:server
 ```
 
-> **Note:** In dev mode, you'll need to configure Vite to proxy `/api` requests to the Express server.
+> In dev mode, configure a Vite proxy or point the browser at the Express server so `/api/chat` requests reach the backend.
 
-## Deploying to Embr
+## Project Structure
 
-1. Push your code to GitHub
-2. Create a project in Embr Portal
-3. Go to **Variables** tab and add:
-   - `FOUNDRY_PROJECT_ENDPOINT` (Secret, Runtime)
-   - `FOUNDRY_AGENT_ID` (Secret, Runtime)
-   - `FOUNDRY_API_KEY` (Secret, Runtime)
-4. Deploy — Embr injects the env vars at container startup
+```
+├── server/
+│   └── index.ts            # Express server — proxies /api/chat to Foundry
+├── src/
+│   ├── api/
+│   │   └── foundryClient.ts  # SSE streaming client (async generator)
+│   ├── components/
+│   │   ├── ChatWidget.tsx    # Floating chat panel + FAB
+│   │   ├── Hero.tsx          # Landing hero section
+│   │   ├── ProductGrid.tsx   # Coffee product cards
+│   │   ├── Footer.tsx        # Page footer
+│   │   └── *.module.css      # Scoped CSS modules
+│   ├── hooks/
+│   │   └── useChat.ts        # Chat state & streaming orchestration
+│   ├── App.tsx               # Root component
+│   └── main.tsx              # Entry point
+├── index.html                # Vite HTML shell
+├── vite.config.ts
+└── tsconfig.json
+```
 
 ## Tech Stack
 
-- [Vite](https://vitejs.dev/) 6
-- [React](https://react.dev/) 19
-- [Express](https://expressjs.com/) 5
+- [Vite](https://vitejs.dev/) 6 — build tooling
+- [React](https://react.dev/) 19 — UI
+- [Express](https://expressjs.com/) 5 — API proxy
 - TypeScript 5.8
-- Custom CSS (Copilot-like dark theme)
+- CSS Modules — component-scoped styling
