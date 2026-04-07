@@ -63,6 +63,12 @@
   position: absolute;
 }
 
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .bag {
   top: 15%;
   left: 30%;

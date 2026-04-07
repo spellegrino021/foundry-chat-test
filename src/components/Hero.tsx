@@ -1,6 +1,6 @@
-import { CoffeeBag } from './illustrations/CoffeeBag';
-import { CoffeeCup } from './illustrations/CoffeeCup';
-import { CoffeeBowl } from './illustrations/CoffeeBowl';
+import coffeeBag from './illustrations/coffeewithoutbg.png';
+import coffeeCup from './illustrations/fullmug.jpg';
+import coffeeBowl from './illustrations/emptymug.jpg';
 import styles from './Hero.module.css';
 
 export function Hero() {
@@ -21,13 +21,13 @@ export function Hero() {
       </div>
       <div className={styles.right}>
         <div className={`${styles.illustration} ${styles.bag}`}>
-          <CoffeeBag />
+          <img src={coffeeBag} alt="Coffee bag" className={styles.img} />
         </div>
         <div className={`${styles.illustration} ${styles.cup}`}>
-          <CoffeeCup />
+          <img src={coffeeCup} alt="Full coffee mug" className={styles.img} />
         </div>
         <div className={`${styles.illustration} ${styles.bowl}`}>
-          <CoffeeBowl />
+          <img src={coffeeBowl} alt="Empty coffee mug" className={styles.img} />
         </div>
       </div>
     </section>
