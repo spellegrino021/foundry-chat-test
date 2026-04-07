@@ -1,25 +1,33 @@
+import { CoffeeBag } from './illustrations/CoffeeBag';
+import { CoffeeCup } from './illustrations/CoffeeCup';
+import { CoffeeBowl } from './illustrations/CoffeeBowl';
 import styles from './Hero.module.css';
 
 export function Hero() {
   return (
     <section className={styles.hero}>
-      <div className={styles.content}>
-        <p className={styles.tagline}>Freshly roasted, shipped weekly</p>
-        <h1 className={styles.title}>
-          Coffee that <em>actually</em> tastes<br />like the bag smells.
+      <div className={styles.left}>
+        <div className={styles.logo}>Embr Roasting Co.</div>
+        <h1 className={styles.headline}>
+          Coffee that<br />
+          actually tastes<br />
+          like the bag smells.
         </h1>
-        <p className={styles.subtitle}>
-          Single-origin beans sourced from the world's best farms.
-          Roasted in small batches, delivered to your door.
-        </p>
-        <div className={styles.actions}>
-          <a href="#shop" className={styles.primaryBtn}>Shop Now</a>
-          <a href="#subscribe" className={styles.secondaryBtn}>Subscribe & Save 15%</a>
+        <div className={styles.cta}>
+          <a href="#menu" className={styles.pill}>
+            Explore our menu
+          </a>
         </div>
       </div>
-      <div className={styles.visual}>
-        <div className={styles.heroImage}>
-          <span className={styles.emoji}>☕</span>
+      <div className={styles.right}>
+        <div className={`${styles.illustration} ${styles.bag}`}>
+          <CoffeeBag />
+        </div>
+        <div className={`${styles.illustration} ${styles.cup}`}>
+          <CoffeeCup />
+        </div>
+        <div className={`${styles.illustration} ${styles.bowl}`}>
+          <CoffeeBowl />
         </div>
       </div>
     </section>

@@ -89,7 +89,7 @@ function ProductCard({ product }: { product: Product }) {
 
 export function ProductGrid() {
   return (
-    <section id="shop" className={styles.section}>
+    <section id="menu" className={styles.section}>
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Our Beans</h2>
         <p className={styles.sectionSubtitle}>

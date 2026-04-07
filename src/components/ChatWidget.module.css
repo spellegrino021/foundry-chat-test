@@ -8,8 +8,8 @@
   align-items: center;
   gap: 10px;
   padding: 14px 22px;
-  background: var(--chat-bg);
-  color: var(--chat-text);
+  background: #3B1A08;
+  color: #FAFAF7;
   border-radius: 50px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   font-size: 14px;
@@ -270,7 +270,7 @@
 }
 
 .input:focus {
-  border-color: var(--chat-accent);
+  border-color: #D4C84A;
 }
 
 .input:disabled {
@@ -281,7 +281,7 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: var(--chat-accent);
+  background: #6B6B2A;
   color: white;
   font-size: 18px;
   font-weight: 700;
@@ -292,7 +292,7 @@
 }
 
 .sendBtn:hover:not(:disabled) {
-  background: #a85d33;
+  background: #4A4A1A;
   transform: scale(1.05);
 }
 

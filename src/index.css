@@ -1,21 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Warm coffee palette */
+  /* EMBR palette */
+  --bg: #FAFAF7;
+  --headline: #3B1A08;
+  --logo-yellow: #D4C84A;
+  --button-border: #6B6B2A;
+  --button-text: #4A4A1A;
+  --illustration-brown: #6B3A2A;
+  --illustration-olive: #8A8A3A;
+
+  /* Legacy mappings for existing components */
   --color-espresso: #1a0e0a;
-  --color-dark-roast: #2c1810;
+  --color-dark-roast: #3B1A08;
   --color-medium-roast: #4a2c1a;
-  --color-light-roast: #6b3a2a;
-  --color-crema: #d4a574;
-  --color-cream: #f5e6d3;
-  --color-milk: #faf6f1;
+  --color-light-roast: #6B3A2A;
+  --color-crema: #D4C84A;
+  --color-cream: #FAFAF7;
+  --color-milk: #FAFAF7;
   --color-white: #ffffff;
-  --color-accent: #c2703e;
-  --color-accent-hover: #a85d33;
+  --color-accent: #6B6B2A;
+  --color-accent-hover: #4A4A1A;
   --color-success: #2d6a4f;
-  --color-text: #1a0e0a;
+  --color-text: #3B1A08;
   --color-text-muted: #6b5b50;
-  --color-border: #e0d0c0;
+  --color-border: rgba(107,107,42,0.15);
 
   /* Chat widget */
   --chat-bg: #1e1e2e;
@@ -23,7 +32,7 @@
   --chat-input: #33334a;
   --chat-text: #e0e0f0;
   --chat-text-muted: #8888aa;
-  --chat-accent: #c2703e;
+  --chat-accent: #6B6B2A;
   --chat-user-bg: #3a3a5c;
   --chat-assistant-bg: #2a2a3c;
 }
@@ -36,7 +45,7 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--color-milk);
+  background: var(--bg);
   color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;

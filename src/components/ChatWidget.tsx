@@ -56,7 +56,7 @@ export function ChatWidget() {
           <div className={styles.panelHeader}>
             <div className={styles.headerInfo}>
               <span className={styles.headerDot} />
-              <span className={styles.headerTitle}>Ember Roast Agent</span>
+              <span className={styles.headerTitle}>Embr Agent</span>
             </div>
             <div className={styles.headerActions}>
               {messages.length > 0 && (
